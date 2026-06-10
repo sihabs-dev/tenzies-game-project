@@ -8,9 +8,10 @@ import { nanoid } from "nanoid";
 import Confetti from "react-confetti";
 
 function App() {
-  const [num, setNum] = useState(RandomNumber());
+  const [num, setNum] = useState(() => RandomNumber());
 
   function RandomNumber() {
+    console.log("RandomNumber Function Run!");
     return new Array(10).fill(0).map(() => ({
       value: Math.ceil(Math.random() * 6),
       isHeld: false,
@@ -18,11 +19,15 @@ function App() {
     }));
   }
   function RandomNum() {
-    setNum((prev) =>
-      prev.map((item) =>
-        item.isHeld ? item : { ...item, value: Math.ceil(Math.random() * 6) },
-      ),
-    );
+    if (!gameWon) {
+      setNum((prev) =>
+        prev.map((item) =>
+          item.isHeld ? item : { ...item, value: Math.ceil(Math.random() * 6) },
+        ),
+      );
+    } else {
+      setNum(RandomNumber());
+    }
   }
 
   function hold(id) {
@@ -60,15 +65,13 @@ function App() {
     num.every((item) => item.isHeld) &&
     num.every((item) => item.value === num[0].value);
   console.log(gameWon);
-  function handleNewGame() {
-    setNum(RandomNumber());
-  }
+
   return (
     <div id="app-component">
       {gameWon && <Confetti />}
       <h1>Play Tenzies Game</h1>
       <section id="btn-container">{RandomNumberButton}</section>
-      <button id="btn" onClick={gameWon ? handleNewGame : RandomNum}>
+      <button id="btn" onClick={RandomNum}>
         {gameWon ? "New Game" : "Roll"}
       </button>
     </div>
