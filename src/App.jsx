@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import reactLogo from "./assets/react.svg";
 import viteLogo from "./assets/vite.svg";
 import heroImg from "./assets/hero.png";
@@ -18,6 +18,7 @@ function App() {
       id: nanoid(),
     }));
   }
+
   function RandomNum() {
     if (!gameWon) {
       setNum((prev) =>
@@ -66,12 +67,18 @@ function App() {
     num.every((item) => item.value === num[0].value);
   console.log(gameWon);
 
+  let buttonRef = useRef(null);
+  useEffect(() => {
+    if (gameWon) {
+      buttonRef.current.focus();
+    }
+  }, [gameWon]);
   return (
     <div id="app-component">
       {gameWon && <Confetti />}
       <h1>Play Tenzies Game</h1>
       <section id="btn-container">{RandomNumberButton}</section>
-      <button id="btn" onClick={RandomNum}>
+      <button ref={buttonRef} id="btn" onClick={RandomNum}>
         {gameWon ? "New Game" : "Roll"}
       </button>
     </div>
