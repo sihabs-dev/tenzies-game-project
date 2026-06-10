@@ -53,15 +53,15 @@ body {
 }
 
 #btn {
-  background-color: blue;
+  background-color: rgb(34, 34, 206);
   color: white;
   font-weight: 500;
-  padding: 15px 30px;
+  padding: 15px 25px;
   border: none;
   border-radius: 5px;
   font-size: 1.2rem;
   cursor: pointer;
-  letter-spacing: 5px;
+  letter-spacing: 3px;
 }
 
 h1 {
